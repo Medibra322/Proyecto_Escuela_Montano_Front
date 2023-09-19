@@ -22,7 +22,6 @@
 .contenedor-fondo{
     background-color: #008948;
     min-height: 40vh;
-    margin-bottom: 2rem;
 }
 
 .contenedor{
