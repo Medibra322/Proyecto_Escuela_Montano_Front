@@ -63,7 +63,8 @@
                 <!-- ----------desplegable idioma--------- -->
                     <li class="nav-item dropdown">
 
-                        <i class="fa-solid fa-globe idioma-icono"></i><select v-model="$i18n.locale">
+                        <i class="fa-solid fa-globe idioma-icono"></i>
+                        <select v-model="$i18n.locale">
                           <option v-for=" locale in $i18n.availableLocales" :key="`locale-${locale}`" :value="locale">{{ locale }}</option>
                         </select>
 
@@ -71,65 +72,8 @@
                   </ul>
               </div>
             </div>
-          </nav>   
-          <!-- -----------Menu hamburguesa----------- -->
-
-          <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-
-          <div class="offcanvas offcanvas-start text-bg-" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
-            <div class="offcanvas-header">
-              <!-- <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Dark offcanvas</h5> -->
-              <button type="button" class="btn-close btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-            </div>
-            <div class="offcanvas-body">
-              <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                <!-- <li class="nav-item"></li>
-                  <a class="nav-link" href="#">Escuela de Montaño</a> -->
-                  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    {{ $t("navbar.escuela") }}
-                  </a>
-                   <ul class="dropdown-menu dropdown-menu">
-                     <li><a class="dropdown-item" href="#">{{ $t("navbar.somos") }}</a></li>
-                    <li><a class="dropdown-item" href="#">{{ $t("navbar.contacto") }}</a></li>
-                    </ul>
-
-
-                <li class="nav-item">
-                  <a class="nav-link" href="#">{{ $t("navbar.menu_dia") }}</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">{{ $t("navbar.menu_estrella") }}</a>
-                  </li>
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    {{ $t("navbar.mas") }}
-                  </a>
-                  <ul class="dropdown-menu dropdown-menu-dark">
-                    <li><a class="dropdown-item" href="#">{{ $t("navbar.carniceria") }}</a></li>
-                        <li><a class="dropdown-item" href="#">{{ $t("navbar.pasteleria") }}</a></li>
-                        <li><a class="dropdown-item" href="#">{{ $t("navbar.raciones") }}</a></li>
-                        <li><a class="dropdown-item" href="#">{{ $t("navbar.pinchos") }}</a></li>
-              
-                   </ul>
-
-                </li>
-                    <li class="nav-item dropdown">
-
-                        <i class="fa-solid fa-globe idioma-icono"></i> <select v-model="$i18n.locale">
-                          <option v-for=" locale in $i18n.availableLocales" :key="`locale-${locale}`" :value="locale">{{ locale }}</option>
-                        </select>
-
-                    </li>
-              </ul>
-              <form class="d-flex mt-3" role="search">
-                <!-- <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-success" type="submit">Search</button> -->
-              </form>
-            </div>
-          </div>
-        </div>
+          </nav>     
+        </div>   
       </nav>
 
 </template>
@@ -145,7 +89,8 @@
 }
 
 .idioma-icono{
-  font-size: 1.1rem;
+  font-size: 1rem;
+  padding: 0.2rem;
 }
 
 .logo{
@@ -173,13 +118,6 @@
       color: #128652;
       font-weight: 500;
     }
-
-
-
-// .navbar-toggler {
-//     top: 300px;
-// }
-
 </style>
 
 
