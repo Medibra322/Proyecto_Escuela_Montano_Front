@@ -2,17 +2,11 @@
     <div class="formulario">
         <h1 class="py-4 text-center">Agregar Producto</h1>
         <form @submit.prevent="agregarProducto">
-            <div class="form-group">
-                <label>Imagen del Producto (URL):</label>
-                <input type="text" v-model="photo">
-            </div>
-            <div class="form-group">
-                <label>Imagen del Producto (Local):</label>
-                <input type="file" @change="handleFileUpload" accept="image/*">
-                <br />
-                <img v-if="imagePreview" class="foto-previsualizacion" :src="imagePreview" alt="Vista previa de la imagen">
-            </div>
-            
+            <label>Imagen del Producto: </label><input type="text" v-model="photo">
+            <br />
+            <img v-if='photo != undefined' class="foto-previsualizacion" :src="photo" alt="defecto foto undefined">
+
+
             <label>Categoría del Producto:</label>
             <select v-model="categoria">
                 <option value="car">Carniceria</option>
@@ -33,6 +27,7 @@
             <button type="submit">Agregar</button>
         </form>
     </div>
+
 </template>
 
 <script setup>
@@ -44,10 +39,8 @@ const nombre = ref('');
 const precio = ref('');
 const photo = ref(undefined);
 
-const imagePreview = ref(null);
-
 const agregarProducto = async () => {
-    const photoValue = photo.value || imagePreview.value;
+    const photoValue = photo.value;
     const categoriaValue = categoria.value;
     const nombreValue = nombre.value;
     const precioValue = precio.value;
@@ -74,18 +67,8 @@ const agregarProducto = async () => {
     }
 };
 
-const handleFileUpload = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-        // Convierte el archivo a una URL de objeto
-        const imageUrl = URL.createObjectURL(file);
-        imagePreview.value = imageUrl;
-    } else {
-        imagePreview.value = null;
-    }
-};
-</script>
 
+</script>
 
 <style>
 /* Estilos para centrar el formulario */
