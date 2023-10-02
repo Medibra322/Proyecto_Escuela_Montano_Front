@@ -1,104 +1,152 @@
 <template>
-    <div v-if="cargando == true" class="carga">
+    <div>
+      <div v-if="cargando" class="carga">
         <div class="cargando-icono">⏳</div>
         <p>Cargando...</p>
-    </div>
-    <div v-else class="tarjetasProductos d-flex flex-wrap">
+      </div>
+      <div v-else class="tarjetasProductos d-flex flex-wrap">
         <div v-for="(producto, index) in productos" :key="index" :producto="producto" class="tarjetaIndividualProducto col-xl-2 col-lg-3 col-md-3 col-sm-12">
-
-            <div class="imagenProducto">
-                    <img v-if="producto.img" :src="producto.img" :alt="producto.nombre">
-                    <img v-else src="" :alt="producto.nombre">
+          <div class="imagenProducto">
+            <img v-if="producto.img" :src="producto.img" :alt="producto.nombre">
+            <img v-else src="" :alt="producto.nombre">
+          </div>
+          <div class="contenidoTexto">
+            <div class="nombreProducto">
+              {{ producto.nombre }}
             </div>
-            <div class="contenidoTexto">
-                <div class="nombreProducto">
-                    {{ producto.nombre }}
-                </div>
-                <div class="precioProducto">
-                    {{ producto.precio }}
-                </div>
-                <!-- <pre>{{ producto.id }}</pre>
-                <pre>{{ producto.img }}</pre> -->
+            <div class="precioProducto">
+              {{ producto.precio }}
             </div>
-            <div class="botones">
-                <!-- <button class="btn btn-success">Editar</button> -->
-                <button class="btn btn-danger" data-bs-toggle="modal" :data-bs-target="'#exampleModal' + producto.id"><i class="fa-solid fa-trash"></i>  Eliminar</button>
-            </div>
+          </div>
+          <div class="botones">
+            <button class="btn btn-success" data-bs-toggle="modal" :data-bs-target="'#editModal' + producto.id"><i class="fa-solid fa-edit"></i> Editar</button>
+            <button class="btn btn-danger" data-bs-toggle="modal" :data-bs-target="'#exampleModal' + producto.id"><i class="fa-solid fa-trash"></i>  Eliminar</button>
+          </div>
         </div>
+      </div>
+  
+      <!-- Modal de Editar Producto -->
+      <div v-for="(producto, index) in productos" :key="index">
+        <div :id="'editModal' + producto.id" class="modal fade exampleModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div>
+                <h5 class="titulo-modal text-center" id="editModalLabel">Editar Producto</h5>
+              </div>
+              <div class="modal-body">
+                <!-- Campos de edición para el producto -->
+                <div class="form-group">
+                  <label for="nombreProducto">Nombre del Producto</label>
+                  <input type="text" class="form-control" id="nombreProducto" v-model="producto.nombre">
+                </div>
+                <div class="form-group">
+                  <label for="precioProducto">Precio del Producto</label>
+                  <input type="text" class="form-control" id="precioProducto" v-model="producto.precio">
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary" @click="guardarCambios(producto)">Guardar Cambios</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Modal de Eliminar Producto -->
+      <div v-for="(producto, index) in productos" :key="index">
+        <div :id="'exampleModal' + producto.id" class="modal fade exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div>
+                <h5 class="titulo-modal text-center" id="exampleModalLabel">¿Quieres borrar este producto?</h5>
+              </div>
+              <div class="modal-body">
+                <img class="modal-imagen-meal" :src="producto.img">
+                <p class="text-center"><strong>Nombre producto:</strong> {{ producto.nombre }}</p>
+                <p class="text-center"><strong>Precio:</strong> {{ producto.precio }}</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" @click="eliminarProducto(producto.id)">Si, borrar</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-
-    <!-- @click="eliminarProducto(producto.id)" -->
-
-    <!-- Modal -->
-        <div v-for="(producto, index) in productos" :key="index">
-          <div :id="'exampleModal' + producto.id" class="modal fade exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div>
-                        <h5 class="titulo-modal text-center" id="exampleModalLabel">¿Quieres borrar este producto?</h5>
-                    </div>
-                    <div class="modal-body">
-                        <img class="modal-imagen-meal" :src="producto.img">
-                        <p class="text-center"><strong>Nombre producto:</strong> {{ producto.nombre }}</p>
-                        <p class="text-center"><strong>Precio: </strong> {{ producto.precio }}</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger"
-                            data-bs-dismiss="modal" @click="eliminarProducto(producto.id)" > Si, borrar. </button>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"> Cancelar </button>
-                    </div>
-                </div>
-            </div>
-           </div>
-        </div>
-</template>
-
-<script setup>
-import { ref, watchEffect, defineProps } from 'vue';
-import axios from 'axios';
-
-const props = defineProps({
+  </template>
+  
+  <script setup>
+  import { ref, watchEffect, defineProps } from 'vue';
+  import axios from 'axios';
+  
+  const props = defineProps({
     categoriaProducto: {
-        type: String,
-        required: true
+      type: String,
+      required: true
     }
-});
-
-const productos = ref("");
-const cargando = ref(true);
-
-async function recibirProductosPorCategoria() {
+  });
+  
+  const productos = ref([]);
+  const cargando = ref(true);
+  
+  async function recibirProductosPorCategoria() {
     cargando.value = true;
     const url = "http://127.0.0.1:5000/productos/" + props.categoriaProducto;
     try {
-        const response = await axios.get(url);
-        productos.value = response.data;
-        cargando.value = false;
+      const response = await axios.get(url);
+      productos.value = response.data;
+      cargando.value = false;
     } catch (error) {
-        console.log(error);
-        cargando.value = false;
+      console.log(error);
+      cargando.value = false;
     }
-}
-
-async function eliminarProducto(idProducto) {
+  }
+  
+  async function guardarCambios(producto) {
+    const url = "http://127.0.0.1:5000/update_producto/" + producto.id;
+    try {
+      const response = await axios.patch(url, {
+        nombre: producto.nombre,
+        precio: producto.precio
+        // Agrega aquí más campos si es necesario
+      });
+  
+      if (response.status === 200) {
+        alert("Cambios guardados");
+        document.getElementById('editModal' + producto.id).classList.remove('show');
+        document.getElementById('editModal' + producto.id).style.display = 'none';
+        document.body.classList.remove('modal-open');
+        document.body.style.paddingRight = '0';
+        document.querySelector('.modal-backdrop').remove();
+      } else {
+        alert("Error al guardar los cambios");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  
+  async function eliminarProducto(idProducto) {
     const url = "http://127.0.0.1:5000/delete_producto/" + idProducto;
     try {
-        const response = await axios.delete(url);
-        if (response.status === 200) {
-            alert("Producto eliminado");
-        } else {
-            alert("Error al eliminar el producto");
-        }
+      const response = await axios.delete(url);
+      if (response.status === 200) {
+        alert("Producto eliminado");
+      } else {
+        alert("Error al eliminar el producto");
+      }
     } catch (error) {
-        console.error(error);
+      console.error(error);
     }
-}
-
-// Watch for changes to categoriaProducto prop
-watchEffect(() => {
+  }
+  
+  // Observa cambios en la prop categoriaProducto
+  watchEffect(() => {
     recibirProductosPorCategoria();
-});
-</script>
+  });
+  </script>
 
 <style>
 .tarjetasProductos {
