@@ -5,18 +5,18 @@
     <div class="icons-container">
       <div class="icon-wrapper">
         <!-- Icono de WhatsApp -->
-        <img src="../assets/img/Img_Home/whatsapp.png" class="whatsapp-icon" alt="WhatsApp" />
-        <p class="icon-data">688 69 62 47</p>
+        <a href="https://api.whatsapp.com/send?phone=34688696247&text=Me%20gustar%C3%ADa%20hacer%20un%20pedido%20de%20..."><img src="../assets/img/Img_Home/whatsapp.png" class="whatsapp-icon" alt="WhatsApp" /></a>
+        
       </div>
       <div class="icon-wrapper">
         <!-- Icono de phone -->
-        <img src="../assets/img/Img_Home/phone.png" class="phone-icon" alt="phone" />
-        <p class="icon-data">944 13 00 52</p>
+        <a href="tel: +34-688-696-247"><img src="../assets/img/Img_Home/phone.png" class="phone-icon" alt="phone" /></a>
+        
       </div>
       <div class="icon-wrapper">
         <!-- Icono de carta -->
-        <img src="../assets/img/Img_Home/carta.png" class="carta-icon" alt="Carta" />
-        <p class="icon-data">escuelamontano@grupopenascal.com</p>
+        <a href="mailto:escuelamontano@grupopenascal.com"><img src="../assets/img/Img_Home/carta.png" class="carta-icon" alt="Carta" /></a>
+        
       </div>
     </div>
   </div>
