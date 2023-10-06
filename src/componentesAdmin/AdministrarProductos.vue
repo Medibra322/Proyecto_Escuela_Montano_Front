@@ -25,33 +25,37 @@
         </div>
       </div>
   
-      <!-- Modal de Editar Producto -->
-      <div v-for="(producto, index) in productos" :key="index">
-        <div :id="'editModal' + producto.id" class="modal fade exampleModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div>
-                <h5 class="titulo-modal text-center" id="editModalLabel">Editar Producto</h5>
+     <!-- Modal de Editar Producto -->
+    <div v-for="(producto, index) in productos" :key="index">
+      <div :id="'editModal' + producto.id" class="modal fade exampleModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div>
+              <h5 class="titulo-modal text-center" id="editModalLabel">Editar Producto</h5>
+            </div>
+            <div class="modal-body">
+              <!-- Campos de edición para el producto -->
+              <div class="form-group">
+                <label for="nombreProducto">Nombre del Producto</label>
+                <input type="text" class="form-control" id="nombreProducto" v-model="producto.nombre">
               </div>
-              <div class="modal-body">
-                <!-- Campos de edición para el producto -->
-                <div class="form-group">
-                  <label for="nombreProducto">Nombre del Producto</label>
-                  <input type="text" class="form-control" id="nombreProducto" v-model="producto.nombre">
-                </div>
-                <div class="form-group">
-                  <label for="precioProducto">Precio del Producto</label>
-                  <input type="text" class="form-control" id="precioProducto" v-model="producto.precio">
-                </div>
+              <div class="form-group">
+                <label for="precioProducto">Precio del Producto</label>
+                <input type="text" class="form-control" id="precioProducto" v-model="producto.precio">
               </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-primary" @click="guardarCambios(producto)">Guardar Cambios</button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+              <div class="form-group">
+                <label for="imagenProducto">URL de la Imagen del Producto</label>
+                <input type="text" class="form-control" id="imagenProducto" v-model="producto.img">
               </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" @click="guardarCambios(producto)">Guardar Cambios</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
             </div>
           </div>
         </div>
       </div>
+    </div>
   
       <!-- Modal de Eliminar Producto -->
       <div v-for="(producto, index) in productos" :key="index">
@@ -105,28 +109,30 @@
   }
   
   async function guardarCambios(producto) {
-    const url = "http://127.0.0.1:5000/update_producto/" + producto.id;
-    try {
-      const response = await axios.patch(url, {
-        nombre: producto.nombre,
-        precio: producto.precio
-        // Agrega aquí más campos si es necesario
-      });
-  
-      if (response.status === 200) {
-        alert("Cambios guardados");
-        document.getElementById('editModal' + producto.id).classList.remove('show');
-        document.getElementById('editModal' + producto.id).style.display = 'none';
-        document.body.classList.remove('modal-open');
-        document.body.style.paddingRight = '0';
-        document.querySelector('.modal-backdrop').remove();
-      } else {
-        alert("Error al guardar los cambios");
-      }
-    } catch (error) {
-      console.error(error);
+    console.log(producto.img);
+    
+  const url = "http://127.0.0.1:5000/update_producto/" + producto.id;
+  try {
+    const response = await axios.patch(url, {
+      nombre: producto.nombre,
+      precio: producto.precio,
+      img: producto.img
+    });
+
+    if (response.status === 200) {
+      alert("Cambios guardados");
+      document.getElementById('editModal' + producto.id).classList.remove('show');
+      document.getElementById('editModal' + producto.id).style.display = 'none';
+      document.body.classList.remove('modal-open');
+      document.body.style.paddingRight = '0';
+      document.querySelector('.modal-backdrop').remove();
+    } else {
+      alert("Error al guardar los cambios");
     }
+  } catch (error) {
+    console.error(error);
   }
+}
   
   async function eliminarProducto(idProducto) {
     const url = "http://127.0.0.1:5000/delete_producto/" + idProducto;
