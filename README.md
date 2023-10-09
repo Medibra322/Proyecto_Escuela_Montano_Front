@@ -45,3 +45,5 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 ** Crear botones de edicion
 ** Crear enlace a los imagenes del contactos del home
 ** Dentro del backend he crear los funcciones de cada boton 
+
+### https://github.com/Medibra322/Proyecto_Escuela_Montano_Front#practicas-en-pe%C3%B1ascal
